@@ -1,0 +1,17 @@
+# --- Core ML & Fine-tuning ---
+# Nota: unsloth se recomienda instalar aparte (ver comando abajo)
+transformers
+trl
+peft
+bitsandbytes
+accelerate
+datasets
+
+# --- Data Engineering ---
+nltk
+
+# --- API & Serving ---
+fastapi
+uvicorn
+pydantic
+
