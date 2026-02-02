@@ -1,1 +1,4 @@
 scripts/__pycache__/fastapi_test.cpython-313.pyc
+model/Qwen3-0.6B-Base.Q4_K_M.gguf
+model/lora_model_alicia.zip
+
