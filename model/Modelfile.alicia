@@ -5,7 +5,7 @@ TEMPLATE """A continuación se muestra una instrucción que describe una tarea.
 Escribe una respuesta que complete adecuadamente la petición.
 
 ### Instrucción:
-Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravillas.
+Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravillas. Mantén una longitud similar al original y asegúrate de terminar con una oración completa.
 
 ### Entrada:
 {{ .Prompt }}
@@ -13,9 +13,9 @@ Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravill
 ### Respuesta:
 """
 
-# Parámetros optimizados para generación creativa
-PARAMETER num_predict 128
-PARAMETER repeat_penalty 1.2
+# Parámetros optimizados para generación creativa y concisa
+PARAMETER num_predict 100
+PARAMETER repeat_penalty 1.3
 PARAMETER repeat_last_n 64
 PARAMETER temperature 0.7
 PARAMETER top_p 0.9
@@ -25,5 +25,5 @@ PARAMETER stop "\n\n\n"
 
 # Información del modelo
 SYSTEM """Eres un asistente que reescribe textos con el estilo literario y fantasioso de "Alicia en el País de las Maravillas" de Lewis Carroll. 
-Usa vocabulario elaborado, metáforas imaginativas y un tono poético y fantástico. Al reescrbir el texto mantienes una longitud similar
-a la del texto de entrada y finalizas el texto generado con un token <eos>"""
+Usa vocabulario elaborado, metáforas imaginativas y un tono poético y fantástico. Intenta mantener una longitud similar a la del texto de entrada.
+Asegúrate siempre de terminar con oraciones completas y concluir con un token <eos>"""

@@ -8,54 +8,55 @@ MODEL_NAME = "alicia:latest"  # Cambia esto por el nombre de tu modelo en Ollama
 
 def generar_respuesta(frase_input, temperatura, max_tokens):
     """
-    Genera una respuesta usando el modelo de Ollama con el formato de prompt especial
+    Genera una respuesta usando el modelo de Ollama con streaming.
+    El Modelfile ya incluye el template, así que solo enviamos el texto de entrada.
     """
-    # Formato de prompt del entrenamiento (según notebook_02_lora_finetuning.ipynb)
-    prompt = f"""A continuación se muestra una instrucción que describe una tarea.
-Escribe una respuesta que complete adecuadamente la petición.
-
-### Instrucción:
-Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravillas. 
-
-### Entrada:
-{frase_input}
-
-### Respuesta:
-"""
-    
-    # Payload para Ollama
+    # Payload para Ollama - el prompt ya está definido en Modelfile.alicia
     payload = {
         "model": MODEL_NAME,
-        "prompt": prompt,
-        "stream": False,
+        "prompt": frase_input,  # Solo el texto de entrada
+        "stream": True,  # Habilitamos streaming
         "options": {
             "temperature": temperatura,
-            "num_predict": max_tokens,
-            "top_p": 0.9,
-            "stop": ["###", "\n\n"]  # Detener en estos tokens
+            "num_predict": max_tokens
         }
     }
     
     try:
-        # Llamada a Ollama
-        response = requests.post(OLLAMA_URL, json=payload, timeout=60)
+        # Llamada a Ollama con streaming
+        response = requests.post(OLLAMA_URL, json=payload, stream=True, timeout=60)
         response.raise_for_status()
         
-        result = response.json()
-        respuesta = result.get('response', '').strip()
+        respuesta_completa = ""
         
-        # Limpiar la respuesta si contiene el formato de prompt
-        if "### Respuesta:" in respuesta:
-            respuesta = respuesta.split("### Respuesta:")[-1].strip()
+        # Procesar el stream línea por línea
+        for line in response.iter_lines():
+            if line:
+                try:
+                    # Cada línea es un JSON con un fragmento de la respuesta
+                    chunk = json.loads(line.decode('utf-8'))
+                    token = chunk.get('response', '')
+                    respuesta_completa += token
+                    
+                    # Yield para actualizar la UI en tiempo real
+                    yield respuesta_completa
+                    
+                    # Si done es True, terminamos
+                    if chunk.get('done', False):
+                        break
+                        
+                except json.JSONDecodeError:
+                    continue
         
-        return respuesta if respuesta else "⚠️ El modelo no generó ninguna respuesta"
+        if not respuesta_completa:
+            yield "⚠️ El modelo no generó ninguna respuesta"
         
     except requests.exceptions.ConnectionError:
-        return "❌ Error: No se pudo conectar con Ollama. Asegúrate de que está corriendo (ollama serve)"
+        yield "❌ Error: No se pudo conectar con Ollama. Asegúrate de que está corriendo (ollama serve)"
     except requests.exceptions.Timeout:
-        return "⏱️ Error: La solicitud tardó demasiado tiempo"
+        yield "⏱️ Error: La solicitud tardó demasiado tiempo"
     except Exception as e:
-        return f"❌ Error inesperado: {str(e)}"
+        yield f"❌ Error inesperado: {str(e)}"
 
 def verificar_modelo():
     """
@@ -72,6 +73,8 @@ def verificar_modelo():
             return f"⚠️ Modelo '{MODEL_NAME}' no encontrado. Modelos disponibles: {', '.join(model_names)}"
     except:
         return "❌ Ollama no está corriendo. Ejecuta: ollama serve"
+
+
 
 # Crear la interfaz de Gradio
 with gr.Blocks(title="Wonderland Stylist 🎩🐰", theme=gr.themes.Soft()) as demo:
