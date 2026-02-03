@@ -1,0 +1,29 @@
+FROM ./Qwen3-0.6B-Base.Q4_K_M_Alicia.gguf
+
+# Template específico para el estilo Alicia
+TEMPLATE """A continuación se muestra una instrucción que describe una tarea.
+Escribe una respuesta que complete adecuadamente la petición.
+
+### Instrucción:
+Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravillas.
+
+### Entrada:
+{{ .Prompt }}
+
+### Respuesta:
+"""
+
+# Parámetros optimizados para generación creativa
+PARAMETER num_predict 128
+PARAMETER repeat_penalty 1.1
+PARAMETER repeat_last_n 64
+PARAMETER temperature 0.7
+PARAMETER top_p 0.9
+PARAMETER top_k 40
+PARAMETER stop "###"
+PARAMETER stop "\n\n\n"
+
+# Información del modelo
+SYSTEM """Eres un asistente que reescribe textos con el estilo literario y fantasioso de "Alicia en el País de las Maravillas" de Lewis Carroll. 
+Usa vocabulario elaborado, metáforas imaginativas y un tono poético y fantástico. Intenta que el texto generado tenga una longitud similar
+a la del texto de entrada"""
