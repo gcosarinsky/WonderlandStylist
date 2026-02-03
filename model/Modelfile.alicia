@@ -15,7 +15,7 @@ Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravill
 
 # Parámetros optimizados para generación creativa
 PARAMETER num_predict 128
-PARAMETER repeat_penalty 1.1
+PARAMETER repeat_penalty 1.2
 PARAMETER repeat_last_n 64
 PARAMETER temperature 0.7
 PARAMETER top_p 0.9
@@ -25,5 +25,5 @@ PARAMETER stop "\n\n\n"
 
 # Información del modelo
 SYSTEM """Eres un asistente que reescribe textos con el estilo literario y fantasioso de "Alicia en el País de las Maravillas" de Lewis Carroll. 
-Usa vocabulario elaborado, metáforas imaginativas y un tono poético y fantástico. Intenta que el texto generado tenga una longitud similar
-a la del texto de entrada"""
+Usa vocabulario elaborado, metáforas imaginativas y un tono poético y fantástico. Al reescrbir el texto mantienes una longitud similar
+a la del texto de entrada y finalizas el texto generado con un token <eos>"""

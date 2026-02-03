@@ -6,12 +6,7 @@ peft
 bitsandbytes
 accelerate
 datasets
-
-# --- Data Engineering ---
 nltk
 
-# --- API & Serving ---
-fastapi
-uvicorn
-pydantic
+
 

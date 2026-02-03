@@ -1,18 +1,27 @@
 import requests
 import json
+from datetime import datetime
 
 # Configuración
 OLLAMA_URL = "http://localhost:11434/api/generate"
 MODEL_NAME = "qwen3:0.6b"
 
-def test_base_model(frase):
+def test_base_model(frase, output_file=None):
     """
     Prueba el modelo base con diferentes formatos de prompt
     """
     
+    # Crear lista para guardar resultados
+    resultados = []
+    
     print("=" * 80)
     print(f"📝 Frase original: {frase}")
     print("=" * 80)
+    
+    # Agregar a resultados
+    resultados.append("=" * 80)
+    resultados.append(f"📝 Frase original: {frase}")
+    resultados.append("=" * 80)
     
     # Probar diferentes formatos de prompt
     prompts = [
@@ -43,6 +52,13 @@ Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravill
         print(f"Prompt usado:\n{prompt[:100]}...")
         print("\n⏳ Generando...\n")
         
+        # Agregar a resultados
+        resultados.append(f"\n{'='*80}")
+        resultados.append(f"🧪 PRUEBA {i} - Formato de prompt {i}")
+        resultados.append(f"{'='*80}")
+        resultados.append(f"Prompt usado:\n{prompt}")
+        resultados.append("\n⏳ Generando...\n")
+        
         payload = {
             "model": MODEL_NAME,
             "prompt": prompt,
@@ -51,7 +67,9 @@ Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravill
                 "temperature": 0.8,
                 "top_p": 0.9,
                 "top_k": 40,
-                "num_predict": 150
+                "num_predict": 1000,    
+                "repeat_penalty": 1.1,           # Penalización por repetir tokens (1.0 = sin penalización)
+                "repeat_last_n": 64,             # Cuántos tokens atrás verificar repeticiones
             }
         }
         
@@ -67,14 +85,36 @@ Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravill
                 print("-" * 80)
                 print(respuesta)
                 print("-" * 80)
+                
+                # Agregar a resultados
+                resultados.append("✅ RESPUESTA:")
+                resultados.append("-" * 80)
+                resultados.append(respuesta)
+                resultados.append("-" * 80)
             else:
                 print("⚠️ Respuesta vacía")
                 print(f"Debug: {result}")
+                
+                # Agregar a resultados
+                resultados.append("⚠️ Respuesta vacía")
+                resultados.append(f"Debug: {result}")
             
         except Exception as e:
             print(f"❌ Error: {e}")
+            resultados.append(f"❌ Error: {e}")
         
         print()
+    
+    # Guardar resultados en archivo si se especificó
+    if output_file:
+        try:
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(resultados))
+            print(f"\n💾 Resultados guardados en: {output_file}")
+        except Exception as e:
+            print(f"\n❌ Error al guardar archivo: {e}")
+    
+    return resultados
 
 
 if __name__ == "__main__":
@@ -101,6 +141,10 @@ if __name__ == "__main__":
         print("💡 Ejecuta: ollama serve")
         exit(1)
     
-    test_base_model(frase)
+    # Generar nombre de archivo con timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_file = f"test_base_model_output_{timestamp}.txt"
+    
+    test_base_model(frase, output_file)
     
     print("\n✅ Pruebas completadas")

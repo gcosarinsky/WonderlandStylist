@@ -1,0 +1,63 @@
+================================================================================
+📝 Frase original: Era una tarde soleada y los niños jugaban en el parque
+================================================================================
+
+================================================================================
+🧪 PRUEBA 1 - Formato de prompt 1
+================================================================================
+Prompt usado:
+Reescribe esta frase con estilo fantasioso: Era una tarde soleada y los niños jugaban en el parque
+
+⏳ Generando...
+
+✅ RESPUESTA:
+--------------------------------------------------------------------------------
+Era una noche moos y los niños brindaban en el bosque, donde la sombra brillaba como un manto mágico.
+--------------------------------------------------------------------------------
+
+================================================================================
+🧪 PRUEBA 2 - Formato de prompt 2
+================================================================================
+Prompt usado:
+Eres un escritor que escribe como Lewis Carroll. Reescribe: Era una tarde soleada y los niños jugaban en el parque
+
+⏳ Generando...
+
+✅ RESPUESTA:
+--------------------------------------------------------------------------------
+Era una tarde soleada, en un parque que se volvía un cielo.
+--------------------------------------------------------------------------------
+
+================================================================================
+🧪 PRUEBA 3 - Formato de prompt 3
+================================================================================
+Prompt usado:
+User: Reescribe este texto con el estilo de Alicia en el País de las Maravillas: Era una tarde soleada y los niños jugaban en el parque
+Assistant:
+
+⏳ Generando...
+
+✅ RESPUESTA:
+--------------------------------------------------------------------------------
+Era una tarde soleada y los niños jugaban en el cielo plateado, donde la luz brillaba como si la tierra daba un toque de risa. En el parque, sus ojos brillaban como si vio un mundo en blanco y azul, cada paso un sonido mágico. Los niños, al arremorar sus piernas, alzaban sus manos como si se desplumaran con un juguete celestial, y el aire se sintió como si hubiera un mundo en blanco. Y en ese momento, un pajar de la naturaleza sacó un juguete que los niños jugaron en el parque, como si hubiera un mundo en blanco.
+--------------------------------------------------------------------------------
+
+================================================================================
+🧪 PRUEBA 4 - Formato de prompt 4
+================================================================================
+Prompt usado:
+### Instrucción:
+Reescribe el siguiente texto con el estilo de Alicia en el País de las Maravillas.
+
+### Entrada:
+Era una tarde soleada y los niños jugaban en el parque
+
+### Respuesta:
+
+
+⏳ Generando...
+
+✅ RESPUESTA:
+--------------------------------------------------------------------------------
+En una tarde soleada, los niños jugaban en el parque, donde el cielo brillaba como si brillara de verdad. Aunque la tierra era suelta, la imaginación de los niños la convertía en un mundo de joyas. Con sus ojos brillantes y sus manos envueltas en luces, jugaban en el parque, donde cada ruido sonaba como un pájaro nuevo.
+--------------------------------------------------------------------------------
