@@ -3,3 +3,4 @@ model/lora_model_alicia.zip
 
 model/Qwen3-0.6B-Base.Q4_K_M_Alicia.gguf
 model/Qwen3-0.6B-base
+api/__pycache__/gradio_app.cpython-313.pyc
